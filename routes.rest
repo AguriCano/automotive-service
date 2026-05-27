@@ -1,0 +1,37 @@
+// LOCALHOST
+###Get all clients
+GET http://localhost:3000/clients
+
+###Get client by id    
+GET http://localhost:3000/clients/
+
+###create clients
+POST http://localhost:3000/clients HTTP/1.1
+content-type: application/json
+{
+  "name": "Juan",
+  "last_name": "Perez",
+  "phone": "987654321",
+  "email": "juan@email.com",
+  "address": "Lima",
+  "dni": "71234567",
+  "registration_date": "2024-01-10",
+  "customer_status": "active"
+}
+
+###PUT  client - update client by id
+PUT http://localhost:3000/clients/6a015749d3aca17cbdf6f40b HTTP/1.1
+content-type: application/json
+{
+  "name": "Juan",
+  "last_name": "Perez",
+  "phone": "987654321",
+  "email": "juan@email.com",
+  "address": "Lima",
+  "dni": "71234567",
+  "registration_date": "2024-01-10",
+  "customer_status": "active"
+}
+
+###DELETE client
+DELETE http://localhost:3000/clients/6a015749d3aca17cbdf6f40b HTTP/1.1

@@ -46,3 +46,5 @@ module.exports = router;
 we need to install mongo in terminal: npm i mongodb
 
 ------------------------------------------------------------------
+
+to deploy in render 
