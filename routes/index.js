@@ -7,4 +7,6 @@ router.get('/', (req, res) => {
     res.send('Welcome to the Automotive Service');
 });
 
+router.use('/clients', require('./clients'));
+
 module.exports = router;
