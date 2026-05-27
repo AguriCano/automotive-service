@@ -1,0 +1,42 @@
+
+1.-create the project:
+mkdir automotive-service
+cd automotive-service
+
+2.-Initialize Node.js
+
+npm init -y
+npm i express
+
+3.-Install dependencies
+
+npm install express mongodb dotenv
+
+npm install nodemon --save-dev
+
+
+CODING
+
+---------------------------------------------------------------
+1-config server.js:                                copy code
+---------------------------------------------------------------
+const express = require('express');
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+---------------------------------------------------------------
+2-index.js                                           copy code 
+----------------------------------------------------------------
+const router = require('express').Router();
+
+router.get('/', (req, res) => {
+    res.send('Welcome to the Automotive Service');
+});
+
+module.exports = router;
