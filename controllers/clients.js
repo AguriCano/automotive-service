@@ -1,10 +1,11 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-const getAll = async (req, res) => {
 
 // Get all clients from the database and return them as JSON
-const result = await mongodb.getDatabase().db().collection('clients').find();
+//#swagger.tags = ['Clients']
+const getAll = async (req, res) => {
+    const result = await mongodb.getDatabase().db().collection('clients').find();
     result.toArray().then((clients) => {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(clients);
@@ -12,6 +13,7 @@ const result = await mongodb.getDatabase().db().collection('clients').find();
 };
 
 // Get a single client by its ID from the database and return it as JSON
+//#swagger.tags = ['Clients']
 const getSingle = async (req, res) => {
     const clientsId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection('clients').find({ _id: clientsId });
@@ -22,8 +24,8 @@ const getSingle = async (req, res) => {
 };
 
 // Create a new client in the database
+//#swagger.tags = ['Clients']
 const createClients = async (req, res) => {
-    //#swagger.tags = ['Clients']
     const clients = {
         name: req.body.name,
         last_name: req.body.last_name,
@@ -46,8 +48,8 @@ const createClients = async (req, res) => {
 };
 
 // Update an existing client in the database
+//#swagger.tags = ['Clients']
 const updateClients = async (req, res) => {
-    //#swagger.tags = ['Clients']
     const clientId = new ObjectId(req.params.id);
 const update = {
         name: req.body.name,
@@ -73,8 +75,8 @@ const response = await mongodb
 };
 
 // Delete a client from the database
+//#swagger.tags = ['Clients']
 const deleteClients = async (req, res) => {
-    //#swagger.tags = ['Clients']
     const clientId = new ObjectId(req.params.id);
     const response = await mongodb.getDatabase().db().collection('clients').deleteOne({ _id: clientId });
 

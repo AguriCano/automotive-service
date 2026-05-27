@@ -3,16 +3,17 @@
 GET http://localhost:3000/clients
 
 ###Get client by id    
-GET http://localhost:3000/clients/
+GET http://localhost:3000/clients/6a166b122a9d25b6525662eb
 
 ###create clients
 POST http://localhost:3000/clients HTTP/1.1
 content-type: application/json
+
 {
-  "name": "Juan",
-  "last_name": "Perez",
+  "name": "Aguri",
+  "last_name": "Cano",
   "phone": "987654321",
-  "email": "juan@email.com",
+  "email": "aguri@email.com",
   "address": "Lima",
   "dni": "71234567",
   "registration_date": "2024-01-10",
@@ -20,13 +21,14 @@ content-type: application/json
 }
 
 ###PUT  client - update client by id
-PUT http://localhost:3000/clients/6a015749d3aca17cbdf6f40b HTTP/1.1
+PUT http://localhost:3000/clients/6a166b122a9d25b6525662eb HTTP/1.1
 content-type: application/json
+
 {
-  "name": "Juan",
-  "last_name": "Perez",
+  "name": "Aguri",
+  "last_name": "Cano",
   "phone": "987654321",
-  "email": "juan@email.com",
+  "email": "aguri@email.com",
   "address": "Lima",
   "dni": "71234567",
   "registration_date": "2024-01-10",
@@ -34,4 +36,4 @@ content-type: application/json
 }
 
 ###DELETE client
-DELETE http://localhost:3000/clients/6a015749d3aca17cbdf6f40b HTTP/1.1
+DELETE http://localhost:3000/clients/6a166b122a9d25b6525662eb HTTP/1.1

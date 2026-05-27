@@ -48,3 +48,12 @@ we need to install mongo in terminal: npm i mongodb
 ------------------------------------------------------------------
 
 to deploy in render 
+--------------------------------------------------------------------
+config swagger
+
+ npm i swagger-ui-express
+
+ npm i swagger-autogen
+
+ -------------------------------------------------------------------
+ 

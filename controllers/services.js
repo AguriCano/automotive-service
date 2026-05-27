@@ -1,9 +1,9 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-const getAll = async (req, res) => {
-
 // Get all services from the database and return them as JSON
+//#swagger.tags = ['Services']
+const getAll = async (req, res) => {
 const result = await mongodb.getDatabase().db().collection('services').find();
     result.toArray().then((services) => {
         res.setHeader('Content-Type', 'application/json');
@@ -12,6 +12,7 @@ const result = await mongodb.getDatabase().db().collection('services').find();
 };
 
 // Get a single service by its ID from the database and return it as JSON
+//#swagger.tags = ['Services']
 const getSingle = async (req, res) => {
     const servicesId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection('services').find({_id: servicesId});
@@ -22,8 +23,8 @@ const getSingle = async (req, res) => {
 };
 
 // Create a new service in the database
+//#swagger.tags = ['Services']
 const createServices = async (req, res) => {
-    //#swagger.tags = ['Services']
     const services = {
         license_plate: req.body.license_plate,
         model: req.body.model,
@@ -48,8 +49,8 @@ const createServices = async (req, res) => {
 
 
 // Update an existing service in the database
+//#swagger.tags = ['Services']
 const updateServices = async (req, res) => {
-    //#swagger.tags = ['Services']
     const servicesId = new ObjectId(req.params.id);
     const update = {
         license_plate: req.body.license_plate,
@@ -76,8 +77,8 @@ const response = await mongodb
 };
 
 // Delete a service from the database
+//#swagger.tags = ['Services']
 const deleteServices = async (req, res) => {
-    //#swagger.tags = ['Services']
     const servicesId = new ObjectId(req.params.id);
     const response = await mongodb.getDatabase().db().collection('services').deleteOne({ _id: servicesId });
 
