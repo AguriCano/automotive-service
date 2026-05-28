@@ -3,12 +3,12 @@ const swaggerAutogen = require('swagger-autogen')();
 const doc = {
     info: {
         title: 'Automotive Service API',
-        description: 'API for managing automotive service clients and service records',
+        description: 'API for managing automotive service',
         version: '1.0.0'
     },
-    host: 'localhost:3000',
-    schemes: ['http', 'https'],
-    basePath: '/',
+    host: 'automotive-service.onrender.com',  
+    schemes: ['https'],                        
+    basePath: '/',                             
     consumes: ['application/json'],
     produces: ['application/json']
 };
