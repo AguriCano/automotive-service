@@ -1,78 +1,201 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Users Api",
-    "description": "Users Api",
+    "title": "Automotive Service API",
+    "description": "API for managing automotive service clients and service records",
     "version": "1.0.0"
   },
-  "basePath": "",
-  "paths": {
-    "/": {
-      "get": {
-        "tags": ["Welcome to the Automotive Service"],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
+  "basePath": "/api-docs",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "definitions": {
+    "Client": {
+      "type": "object",
+      "required": ["name", "last_name", "phone", "email", "dni"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John",
+          "description": "Client's first name (min 2 chars)"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Doe",
+          "description": "Client's last name (min 2 chars)"
+        },
+        "phone": {
+          "type": "string",
+          "example": "12345678",
+          "description": "Phone number (min 8 digits)"
+        },
+        "email": {
+          "type": "string",
+          "example": "john.doe@example.com",
+          "description": "Valid email address"
+        },
+        "address": {
+          "type": "string",
+          "example": "123 Main St, Springfield",
+          "description": "Client's address"
+        },
+        "dni": {
+          "type": "string",
+          "example": "12345678",
+          "description": "Identification number (min 6 chars)"
+        },
+        "registration_date": {
+          "type": "string",
+          "format": "date",
+          "example": "2026-05-27",
+          "description": "Date of registration (YYYY-MM-DD)"
+        },
+        "customer_status": {
+          "type": "string",
+          "enum": ["active", "inactive"],
+          "example": "active",
+          "description": "Client status"
         }
       }
     },
-    "/clients/": {
+    "Service": {
+      "type": "object",
+      "required": ["license_plate", "model", "brand", "service_type", "cost"],
+      "properties": {
+        "license_plate": {
+          "type": "string",
+          "example": "ABC-123",
+          "description": "Vehicle license plate (min 5 chars)"
+        },
+        "model": {
+          "type": "string",
+          "example": "Civic",
+          "description": "Vehicle model"
+        },
+        "brand": {
+          "type": "string",
+          "example": "Honda",
+          "description": "Vehicle brand"
+        },
+        "service_type": {
+          "type": "string",
+          "example": "Oil Change",
+          "description": "Type of service"
+        },
+        "description": {
+          "type": "string",
+          "example": "Full synthetic oil change and filter replacement",
+          "description": "Detailed service description"
+        },
+        "cost": {
+          "type": "number",
+          "example": 89.99,
+          "description": "Service cost (positive number)"
+        },
+        "entry_date": {
+          "type": "string",
+          "format": "date",
+          "example": "2026-05-27",
+          "description": "Date vehicle entered the shop"
+        },
+        "delivery_date": {
+          "type": "string",
+          "format": "date",
+          "example": "2026-05-28",
+          "description": "Expected delivery date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "completed", "cancelled"],
+          "example": "pending",
+          "description": "Current service status"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Something went wrong"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": ["Name is required", "Valid email is required"]
+        }
+      }
+    }
+  },
+  "paths": {
+    "/clients": {
       "get": {
         "tags": ["Clients"],
-        "description": "",
+        "summary": "Get all clients",
+        "description": "Returns a list of all clients in the system",
         "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Client"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
       "post": {
         "tags": ["Clients"],
-        "description": "",
+        "summary": "Create a new client",
+        "description": "Creates a new client with the provided data",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "last_name": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "address": {
-                  "example": "any"
-                },
-                "dni": {
-                  "example": "any"
-                },
-                "registration_date": {
-                  "example": "any"
-                },
-                "customer_status": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Client"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Client created successfully"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "507f1f77bcf86cd799439011"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation failed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -80,248 +203,359 @@
     "/clients/{id}": {
       "get": {
         "tags": ["Clients"],
-        "description": "",
-        "produces": ["application/json"],
+        "summary": "Get client by ID",
+        "description": "Returns a single client by its MongoDB ObjectId",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$",
+            "description": "Client's 24-character ObjectId"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid ID format",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
       "put": {
         "tags": ["Clients"],
-        "description": "",
+        "summary": "Update a client",
+        "description": "Replaces an existing client with new data",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$",
+            "description": "Client's 24-character ObjectId"
           },
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "last_name": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "address": {
-                  "example": "any"
-                },
-                "dni": {
-                  "example": "any"
-                },
-                "registration_date": {
-                  "example": "any"
-                },
-                "customer_status": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Client"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK - Client updated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Client updated successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation failed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
       "delete": {
         "tags": ["Clients"],
-        "description": "",
+        "summary": "Delete a client",
+        "description": "Removes a client from the database",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$",
+            "description": "Client's 24-character ObjectId"
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK - Client deleted",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Client deleted successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid ID format",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
     },
-    "/services/": {
+    "/services": {
       "get": {
-        "description": "",
+        "tags": ["Services"],
+        "summary": "Get all services",
+        "description": "Returns a list of all service records",
         "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Service"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
       "post": {
         "tags": ["Services"],
-        "description": "",
+        "summary": "Create a new service record",
+        "description": "Creates a new service entry for a vehicle",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "license_plate": {
-                  "example": "any"
-                },
-                "model": {
-                  "example": "any"
-                },
-                "brand": {
-                  "example": "any"
-                },
-                "service_type": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "cost": {
-                  "example": "any"
-                },
-                "entry_date": {
-                  "example": "any"
-                },
-                "delivery_date": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Service"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Service created successfully"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "507f1f77bcf86cd799439011"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation failed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
     },
     "/services/{id}": {
       "get": {
-        "description": "",
-        "produces": ["application/json"],
+        "tags": ["Services"],
+        "summary": "Get service by ID",
+        "description": "Returns a single service record by its MongoDB ObjectId",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$",
+            "description": "Service's 24-character ObjectId"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Service"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid ID format",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
       "put": {
         "tags": ["Services"],
-        "description": "",
+        "summary": "Update a service record",
+        "description": "Replaces an existing service record with new data",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$",
+            "description": "Service's 24-character ObjectId"
           },
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "license_plate": {
-                  "example": "any"
-                },
-                "model": {
-                  "example": "any"
-                },
-                "brand": {
-                  "example": "any"
-                },
-                "service_type": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "cost": {
-                  "example": "any"
-                },
-                "entry_date": {
-                  "example": "any"
-                },
-                "delivery_date": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Service"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK - Service updated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Service updated successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation failed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       },
       "delete": {
         "tags": ["Services"],
-        "description": "",
+        "summary": "Delete a service record",
+        "description": "Removes a service record from the database",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$",
+            "description": "Service's 24-character ObjectId"
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK - Service deleted",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Service deleted successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid ID format",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }

@@ -1,28 +1,14 @@
-// LOCALHOST
-###Get all clients
+### LOCALHOST
+
+### Get all clients
 GET http://localhost:3000/clients
 
-###Get client by id    
-GET http://localhost:3000/clients/6a166b122a9d25b6525662eb
+### Get single client by ID (replace with a real ID from your database)
+GET http://localhost:3000/clients/65f5a1b2c3d4e5f6a7b8c9d0
 
-###create clients
-POST http://localhost:3000/clients HTTP/1.1
-content-type: application/json
-
-{
-  "name": "Aguri",
-  "last_name": "Cano",
-  "phone": "987654321",
-  "email": "aguri@email.com",
-  "address": "Lima",
-  "dni": "71234567",
-  "registration_date": "2024-01-10",
-  "customer_status": "active"
-}
-
-###PUT  client - update client by id
-PUT http://localhost:3000/clients/6a166b122a9d25b6525662eb HTTP/1.1
-content-type: application/json
+### Create a new client
+POST http://localhost:3000/clients
+Content-Type: application/json
 
 {
   "name": "Aguri",
@@ -35,5 +21,65 @@ content-type: application/json
   "customer_status": "active"
 }
 
-###DELETE client
-DELETE http://localhost:3000/clients/6a166b122a9d25b6525662eb HTTP/1.1
+### Update a client (replace with a real ID)
+PUT http://localhost:3000/clients/65f5a1b2c3d4e5f6a7b8c9d0
+Content-Type: application/json
+
+{
+  "name": "Aguri Updated",
+  "last_name": "Cano",
+  "phone": "987654321",
+  "email": "aguri.updated@email.com",
+  "address": "Lima",
+  "dni": "71234567",
+  "registration_date": "2024-01-10",
+  "customer_status": "active"
+}
+
+### Delete a client (replace with a real ID)
+DELETE http://localhost:3000/clients/65f5a1b2c3d4e5f6a7b8c9d0
+
+### ============================================
+### SERVICES ROUTES
+### ============================================
+
+### Get all services
+GET http://localhost:3000/services
+
+### Get single service by ID (replace with a real ID)
+GET http://localhost:3000/services/65f5a1b2c3d4e5f6a7b8c9d1
+
+### Create a new service
+POST http://localhost:3000/services
+Content-Type: application/json
+
+{
+  "license_plate": "ABC-123",
+  "model": "Civic",
+  "brand": "Honda",
+  "service_type": "Oil Change",
+  "description": "Full synthetic oil change",
+  "cost": 89.99,
+  "entry_date": "2026-05-27",
+  "delivery_date": "2026-05-28",
+  "status": "pending"
+}
+
+### Update a service (replace with a real ID)
+PUT http://localhost:3000/services/65f5a1b2c3d4e5f6a7b8c9d1
+Content-Type: application/json
+
+{
+  "license_plate": "ABC-123",
+  "model": "Civic",
+  "brand": "Honda",
+  "service_type": "Oil Change",
+  "description": "Full synthetic oil change + filter",
+  "cost": 99.99,
+  "entry_date": "2026-05-27",
+  "delivery_date": "2026-05-29",
+  "status": "in_progress"
+}
+
+### Delete a service (replace with a real ID)
+DELETE http://localhost:3000/services/65f5a1b2c3d4e5f6a7b8c9d1
