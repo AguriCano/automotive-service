@@ -56,4 +56,41 @@ config swagger
  npm i swagger-autogen
 
  -------------------------------------------------------------------
- 
+ example clients: 
+ {
+  "name": "Aguri",
+  "last_name": "Cano",
+  "phone": "967157455",
+  "email": "agurican@gmail.com",
+  "address": "calle.los rubies",
+  "dni": "75333066",
+  "registration_date": "27-05-2026",
+  "customer_status": "active"
+},
+
+example services: 
+{
+    "_id": "6a167dfd2a9d25b6525662fb",
+    "customer_id": "CUST001",
+    "license_plate": "ABC-123",
+    "model": "Corolla",
+    "brand": "Toyota",
+    "service_type": "maintenance",
+    "description": "Oil change",
+    "cost": 85.5,
+    "entry_date": "2025-05-01",
+    "delivery_date": "2025-05-02",
+    "status": "pending"
+  }
+
+  {
+  "license_plate": "byu-666",
+  "model": "corolla cross",
+  "brand": "toyota",
+  "service_type": "lubri express",
+  "description": "oil change",
+  "cost": "151",
+  "entry_date": "27-05-2026",
+  "delivery_date": "28-05-2026",
+  "status": "pending"
+}

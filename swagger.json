@@ -5,9 +5,7 @@
     "description": "Users Api",
     "version": "1.0.0"
   },
-  "host": "automotive-service.onrender.com/",
-  "basePath": "/",
-  "schemes": ["http", "https"],
+  "basePath": "",
   "paths": {
     "/": {
       "get": {
