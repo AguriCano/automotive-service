@@ -5,6 +5,7 @@
     "description": "API for managing automotive service clients and service records",
     "version": "1.0.0"
   },
+  "host": "automotive-service.onrender.com",
   "basePath": "/api-docs",
   "schemes": ["http", "https"],
   "consumes": ["application/json"],
