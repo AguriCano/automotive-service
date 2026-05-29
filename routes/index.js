@@ -2,6 +2,8 @@ const router = require('express').Router();
 
 router.use('/', require('./swagger'));
 
+
+router.use('/auth', require('./auth'));
 /* The code `router.get('/', (req, res) => {
     res.send('Welcome to the Automotive Service');
 });` is setting up a route in an Express router. */
