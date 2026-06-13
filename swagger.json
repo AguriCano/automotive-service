@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Automotive Service API",
-    "description": "API for managing automotive service clients and service records with JWT authentication",
+    "description": "API for managing automotive service clients and service records",
     "version": "1.0.0"
   },
   "host": "automotive-service.onrender.com",
@@ -113,39 +113,7 @@
         }
       }
     },
-    "LoginRequest": {
-      "type": "object",
-      "required": ["email", "password"],
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "admin@automotive.com",
-          "description": "User email address"
-        },
-        "password": {
-          "type": "string",
-          "example": "admin123",
-          "description": "User password"
-        }
-      }
-    },
-    "LoginResponse": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Login successful"
-        },
-        "token": {
-          "type": "string",
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        },
-        "expires_in": {
-          "type": "integer",
-          "example": 86400
-        }
-      }
-    },
+
     "Error": {
       "type": "object",
       "properties": {
@@ -164,49 +132,6 @@
     }
   },
   "paths": {
-    "/auth/login": {
-      "post": {
-        "tags": ["Authentication"],
-        "summary": "User login",
-        "description": "Authenticates a user and returns a JWT token. Use this token in the Authorization header for protected routes.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/LoginRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Login successful",
-            "schema": {
-              "$ref": "#/definitions/LoginResponse"
-            }
-          },
-          "400": {
-            "description": "Missing email or password",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "401": {
-            "description": "Invalid credentials",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
     "/clients": {
       "get": {
         "tags": ["Clients"],
@@ -234,15 +159,8 @@
       "post": {
         "tags": ["Clients"],
         "summary": "Create a new client",
-        "description": "Creates a new client with the provided data. **Requires authentication** (Bearer token).",
+        "description": "Creates a new client with the provided data.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "Bearer token (e.g., 'Bearer eyJhbGciOiJIUzI1NiIs...')"
-          },
           {
             "name": "body",
             "in": "body",
@@ -275,12 +193,6 @@
               "$ref": "#/definitions/Error"
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid token",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "schema": {
@@ -294,7 +206,7 @@
       "get": {
         "tags": ["Clients"],
         "summary": "Get client by ID",
-        "description": "Returns a single client by its MongoDB ObjectId. This endpoint is public.",
+        "description": "Returns a single client by its MongoDB ObjectId.",
         "parameters": [
           {
             "name": "id",
@@ -335,15 +247,8 @@
       "put": {
         "tags": ["Clients"],
         "summary": "Update a client",
-        "description": "Replaces an existing client with new data. **Requires authentication** (Bearer token).",
+        "description": "Replaces an existing client with new data.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "Bearer token (e.g., 'Bearer eyJhbGciOiJIUzI1NiIs...')"
-          },
           {
             "name": "id",
             "in": "path",
@@ -380,12 +285,6 @@
               "$ref": "#/definitions/Error"
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid token",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
           "404": {
             "description": "Not Found",
             "schema": {
@@ -403,15 +302,8 @@
       "delete": {
         "tags": ["Clients"],
         "summary": "Delete a client",
-        "description": "Removes a client from the database. **Requires authentication** (Bearer token).",
+        "description": "Removes a client from the database.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "Bearer token (e.g., 'Bearer eyJhbGciOiJIUzI1NiIs...')"
-          },
           {
             "name": "id",
             "in": "path",
@@ -447,12 +339,6 @@
             }
           },
           "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/Error"
@@ -465,7 +351,7 @@
       "get": {
         "tags": ["Services"],
         "summary": "Get all services",
-        "description": "Returns a list of all service records. This endpoint is public.",
+        "description": "Returns a list of all service records.",
         "produces": ["application/json"],
         "responses": {
           "200": {
@@ -488,15 +374,8 @@
       "post": {
         "tags": ["Services"],
         "summary": "Create a new service record",
-        "description": "Creates a new service entry for a vehicle. **Requires authentication** (Bearer token).",
+        "description": "Creates a new service entry for a vehicle.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "Bearer token (e.g., 'Bearer eyJhbGciOiJIUzI1NiIs...')"
-          },
           {
             "name": "body",
             "in": "body",
@@ -525,19 +404,13 @@
           },
           "400": {
             "description": "Bad Request - Validation failed",
-            "schema": {
-              "$ref": "#/definitions/Error"
+            "schema": {21"
+                }
+              }
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid token",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
+          "400": {
+            "description": "Bad Request - Validation failed
               "$ref": "#/definitions/Error"
             }
           }
@@ -589,15 +462,8 @@
       "put": {
         "tags": ["Services"],
         "summary": "Update a service record",
-        "description": "Replaces an existing service record with new data. **Requires authentication** (Bearer token).",
+        "description": "Replaces an existing service record with new data.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": "Bearer token (e.g., 'Bearer eyJhbGciOiJIUzI1NiIs...')"
-          },
           {
             "name": "id",
             "in": "path",
@@ -634,12 +500,6 @@
               "$ref": "#/definitions/Error"
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid token",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
           "404": {
             "description": "Not Found",
             "schema": {
@@ -663,15 +523,8 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "type": "string",
-            "description": "Bearer token (e.g., 'Bearer eyJhbGciOiJIUzI1NiIs...')"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "pattern": "^[a-fA-F0-9]{24}$",
+            "type": "string",",
+        "parameters": ["pattern": "^[a-fA-F0-9]{24}$",
             "description": "Service's 24-character ObjectId"
           }
         ],
@@ -701,12 +554,6 @@
             }
           },
           "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/Error"

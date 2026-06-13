@@ -1,24 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const servicesController = require('../controllers/services');
-const { verifyToken } = require('../middleware/auth');
 
-// Public routes (do not require authentication)
+// All routes are public (no authentication required)
 //#swagger.tags = ['Services']
 router.get('/', servicesController.getAll);
 
 //#swagger.tags = ['Services']
 router.get('/:id', servicesController.getSingle);
 
-// PROTECTED routes (require JWT token)
 //#swagger.tags = ['Services']
-router.post('/', verifyToken, servicesController.createServices);
+router.post('/', servicesController.createServices);
 
 //#swagger.tags = ['Services']
-router.put('/:id', verifyToken, servicesController.updateServices);
+router.put('/:id', servicesController.updateServices);
 
 //#swagger.tags = ['Services']
-router.delete('/:id', verifyToken, servicesController.deleteServices);   
+router.delete('/:id', servicesController.deleteServices);   
 
 
 module.exports = router;

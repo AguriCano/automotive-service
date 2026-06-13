@@ -33,6 +33,5 @@ mongodb.initDB((err) => {
     app.listen(PORT, () => {
         console.log(`✅ Database initialized and Node running on port ${PORT}`);
         console.log(`📚 Swagger UI available at: http://localhost:${PORT}/api-docs`);
-        console.log(`🔐 Login endpoint: http://localhost:${PORT}/auth/login`);
     });
 });
