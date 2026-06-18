@@ -23,15 +23,20 @@ app.use(bodyParser.json());
 // Routes (all, included /auth/login y las protegidas)
 app.use('/', require('./routes'));
 
-// Initialize MongoDB and then the server
-mongodb.initDB((err) => {
-    if (err) {
-        console.error('MongoDB init failed:', err);
-        return;
-    }
+// Initialize MongoDB and then the server (only if not imported as a module for testing)
+if (require.main === module) {
+    mongodb.initDB((err) => {
+        if (err) {
+            console.error('MongoDB init failed:', err);
+            return;
+        }
 
-    app.listen(PORT, () => {
-        console.log(`✅ Database initialized and Node running on port ${PORT}`);
-        console.log(`📚 Swagger UI available at: http://localhost:${PORT}/api-docs`);
+        app.listen(PORT, () => {
+            console.log(`✅ Database initialized and Node running on port ${PORT}`);
+            console.log(`📚 Swagger UI available at: http://localhost:${PORT}/api-docs`);
+        });
     });
-});
+}
+
+// Export app for testing
+module.exports = app;

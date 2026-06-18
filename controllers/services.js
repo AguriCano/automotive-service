@@ -5,40 +5,31 @@ const ObjectId = require('mongodb').ObjectId;
 const validateServiceData = (data, isUpdate = false) => {
     const errors = [];
     
-    if (!isUpdate || data.license_plate !== undefined) {
-        if (!data.license_plate || data.license_plate.trim().length < 5) {
-            errors.push("License plate is required and must have at least 5 characters");
+    if (!isUpdate || data.name !== undefined) {
+        if (!data.name || data.name.trim().length < 2) {
+            errors.push("Service name is required and must have at least 2 characters");
         }
     }
     
-    if (!isUpdate || data.model !== undefined) {
-        if (!data.model || data.model.trim().length < 1) {
-            errors.push("Model is required");
+    if (!isUpdate || data.description !== undefined) {
+        if (!data.description || data.description.trim().length < 5) {
+            errors.push("Description is required and must have at least 5 characters");
         }
     }
     
-    if (!isUpdate || data.brand !== undefined) {
-        if (!data.brand || data.brand.trim().length < 1) {
-            errors.push("Brand is required");
+    if (!isUpdate || data.price !== undefined) {
+        if (data.price === undefined || data.price === null) {
+            errors.push("Price is required");
+        } else if (typeof data.price !== 'number' || data.price < 0) {
+            errors.push("Price must be a non-negative number");
         }
     }
     
-    if (!isUpdate || data.service_type !== undefined) {
-        if (!data.service_type || data.service_type.trim().length < 3) {
-            errors.push("Service type is required");
-        }
-    }
-    
-    if (!isUpdate || data.cost !== undefined) {
-        if (data.cost === undefined || data.cost === null || isNaN(parseFloat(data.cost)) || parseFloat(data.cost) < 0) {
-            errors.push("Cost must be a positive number");
-        }
-    }
-    
-    if (!isUpdate || data.status !== undefined) {
-        const validStatuses = ['pending', 'in_progress', 'completed', 'cancelled'];
-        if (!data.status || !validStatuses.includes(data.status)) {
-            errors.push(`Status must be one of: ${validStatuses.join(', ')}`);
+    if (!isUpdate || data.duration !== undefined) {
+        if (data.duration === undefined || data.duration === null) {
+            errors.push("Duration is required");
+        } else if (typeof data.duration !== 'number' || data.duration <= 0) {
+            errors.push("Duration must be a positive number (in minutes)");
         }
     }
     
@@ -92,15 +83,12 @@ const createServices = async (req, res) => {
         }
         
         const services = {
-            license_plate: req.body.license_plate,
-            model: req.body.model,
-            brand: req.body.brand,
-            service_type: req.body.service_type,
-            description: req.body.description || "",
-            cost: parseFloat(req.body.cost),
-            entry_date: req.body.entry_date || new Date().toISOString().split('T')[0],
-            delivery_date: req.body.delivery_date || null,
-            status: req.body.status || "pending"
+            name: req.body.name,
+            description: req.body.description,
+            price: parseFloat(req.body.price),
+            duration: parseInt(req.body.duration),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
         };
         
         const response = await mongodb.getDatabase().db().collection('services').insertOne(services);
@@ -133,21 +121,18 @@ const updateServices = async (req, res) => {
         }
         
         const servicesId = new ObjectId(req.params.id);
-        const update = {
-            license_plate: req.body.license_plate,
-            model: req.body.model,
-            brand: req.body.brand,
-            service_type: req.body.service_type,
-            description: req.body.description || "",
-            cost: req.body.cost !== undefined ? parseFloat(req.body.cost) : 0,
-            entry_date: req.body.entry_date,
-            delivery_date: req.body.delivery_date || null,
-            status: req.body.status
-        };
+        const update = {};
+        
+        // Only include fields that are provided in the request
+        if (req.body.name !== undefined) update.name = req.body.name;
+        if (req.body.description !== undefined) update.description = req.body.description;
+        if (req.body.price !== undefined) update.price = parseFloat(req.body.price);
+        if (req.body.duration !== undefined) update.duration = parseInt(req.body.duration);
+        update.updatedAt = new Date().toISOString();
         
         const response = await mongodb
             .getDatabase().db().collection('services')
-            .replaceOne({ _id: servicesId }, update);
+            .updateOne({ _id: servicesId }, { $set: update });
         
         if (response.modifiedCount > 0) {
             res.status(200).json({ message: "Service updated successfully" });

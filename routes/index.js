@@ -9,7 +9,10 @@ router.get('/', (req, res) => {
     res.send('Welcome to the Automotive Service');
 });
 
+router.use('/auth', require('./auth'));
 router.use('/clients', require('./clients'));
 router.use('/services', require('./services'));
+router.use('/appointments', require('./appointments'));
+router.use('/mechanics', require('./mechanics'));
 
 module.exports = router;
