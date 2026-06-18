@@ -20,6 +20,9 @@ app.use(cors({
 // Body parser middleware
 app.use(bodyParser.json());
 
+// Serve static files (login page, etc.)
+app.use(express.static('public'));
+
 // Routes (all, included /auth/login y las protegidas)
 app.use('/', require('./routes'));
 
