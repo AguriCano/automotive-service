@@ -10,7 +10,29 @@ const doc = {
     schemes: ['https'],                        
     basePath: '/',                             
     consumes: ['application/json'],
-    produces: ['application/json']
+    produces: ['application/json'],
+    tags: [
+        {
+            name: 'Clients',
+            description: 'Client management endpoints'
+        },
+        {
+            name: 'Services',
+            description: 'Service management endpoints'
+        },
+        {
+            name: 'Appointments',
+            description: 'Appointment management endpoints'
+        },
+        {
+            name: 'Mechanics',
+            description: 'Mechanic management endpoints'
+        },
+        {
+            name: 'Welcome to the Automotive Service',
+            description: 'Root welcome endpoint'
+        }
+    ]
 };
 
 const outputFile = './swagger.json';

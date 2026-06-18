@@ -16,6 +16,28 @@
   "produces": [
     "application/json"
   ],
+  "tags": [
+    {
+      "name": "Clients",
+      "description": "Client management endpoints"
+    },
+    {
+      "name": "Services",
+      "description": "Service management endpoints"
+    },
+    {
+      "name": "Appointments",
+      "description": "Appointment management endpoints"
+    },
+    {
+      "name": "Mechanics",
+      "description": "Mechanic management endpoints"
+    },
+    {
+      "name": "Welcome to the Automotive Service",
+      "description": "Root welcome endpoint"
+    }
+  ],
   "paths": {
     "/": {
       "get": {
@@ -32,7 +54,10 @@
     },
     "/clients/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Clients"
+        ],
+        "description": "Get all clients",
         "produces": [
           "application/json"
         ],
@@ -46,7 +71,10 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Clients"
+        ],
+        "description": "Create a new client",
         "parameters": [
           {
             "name": "body",
@@ -97,7 +125,10 @@
     },
     "/clients/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Clients"
+        ],
+        "description": "Get a client by ID",
         "produces": [
           "application/json"
         ],
@@ -125,7 +156,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Clients"
+        ],
+        "description": "Update a client by ID",
         "parameters": [
           {
             "name": "id",
@@ -183,7 +217,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Clients"
+        ],
+        "description": "Delete a client by ID",
         "parameters": [
           {
             "name": "id",
@@ -210,7 +247,10 @@
     },
     "/services/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Services"
+        ],
+        "description": "Get all services",
         "produces": [
           "application/json"
         ],
@@ -224,7 +264,10 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Services"
+        ],
+        "description": "Create a new service",
         "parameters": [
           {
             "name": "body",
@@ -278,7 +321,10 @@
     },
     "/services/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Services"
+        ],
+        "description": "Get a service by ID",
         "produces": [
           "application/json"
         ],
@@ -306,7 +352,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Services"
+        ],
+        "description": "Update a service by ID",
         "parameters": [
           {
             "name": "id",
@@ -367,7 +416,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Services"
+        ],
+        "description": "Delete a service by ID",
         "parameters": [
           {
             "name": "id",
@@ -394,7 +446,10 @@
     },
     "/appointments/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Get all appointments",
         "produces": [
           "application/json"
         ],
@@ -408,7 +463,10 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Create a new appointment (requires authentication)",
         "parameters": [
           {
             "name": "authorization",
@@ -461,7 +519,10 @@
     },
     "/appointments/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Get an appointment by ID",
         "produces": [
           "application/json"
         ],
@@ -489,7 +550,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Update an appointment by ID (requires authentication)",
         "parameters": [
           {
             "name": "id",
@@ -549,7 +613,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Delete an appointment by ID (requires authentication)",
         "parameters": [
           {
             "name": "id",
@@ -584,7 +651,10 @@
     },
     "/mechanics/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Mechanics"
+        ],
+        "description": "Get all mechanics",
         "produces": [
           "application/json"
         ],
@@ -598,7 +668,10 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Mechanics"
+        ],
+        "description": "Create a new mechanic (requires authentication)",
         "parameters": [
           {
             "name": "authorization",
@@ -657,7 +730,10 @@
     },
     "/mechanics/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Mechanics"
+        ],
+        "description": "Get a mechanic by ID",
         "produces": [
           "application/json"
         ],
@@ -685,7 +761,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Mechanics"
+        ],
+        "description": "Update a mechanic by ID (requires authentication)",
         "parameters": [
           {
             "name": "id",
@@ -751,7 +830,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Mechanics"
+        ],
+        "description": "Delete a mechanic by ID (requires authentication)",
         "parameters": [
           {
             "name": "id",
